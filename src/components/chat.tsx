@@ -1,8 +1,14 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mic, CircleStop, MoveUp } from 'lucide-react';
 
-export const Chat = () => {
+interface ChatProps {
+  onFirstInteraction?: () => void;
+  hasInteracted?: boolean;
+}
+
+export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = false }) => {
   const [inputValue, setInputValue] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0); // To track recording duration
@@ -17,6 +23,11 @@ export const Chat = () => {
     if (isRecording) return;
 
     if (!inputValue.trim()) return;
+
+    // Trigger the first interaction if it hasn't happened yet
+    if (!hasInteracted && onFirstInteraction) {
+      onFirstInteraction();
+    }
 
     console.log('Text message:', inputValue);
     setInputValue("");
@@ -34,6 +45,11 @@ export const Chat = () => {
 
   const handleRecording = async () => {
     try {
+      // Trigger the first interaction if starting recording and it hasn't happened yet
+      if (!isRecording && !hasInteracted && onFirstInteraction) {
+        onFirstInteraction();
+      }
+
       if (!isRecording) {
         console.log("Starting recording...");
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -100,13 +116,15 @@ export const Chat = () => {
   const width = Math.min((recordingTime / maxRecordingTime) * maxWidth, maxWidth);
 
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-4">
+    <div className={`${hasInteracted 
+      ? "fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-4" 
+      : "fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl px-4"}`}>
       <form onSubmit={handleSendMessage} className="w-full relative">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder={isRecording ? "" : "Type your message..."}
+          placeholder={isRecording ? "" : hasInteracted ? "Type your message..." : "Ask Feynman.ai anything..."}
           className="w-[95%] px-4 py-3 bg-white rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
           name="userInput"
           autoComplete="off"
