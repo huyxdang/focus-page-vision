@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
               to="/" 
               className="text-xl font-medium transition-opacity hover:opacity-80"
             >
-              Feynman.ai
+              Feynman.ai ⭐️
             </Link>
           </div>
           

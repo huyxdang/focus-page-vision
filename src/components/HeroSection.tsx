@@ -9,8 +9,11 @@ const HeroSection: React.FC = () => {
         <div className="max-w-3xl mx-auto">
           <div className="space-y-6 text-center sm:text-left animate-fade-up" style={{ animationDelay: '200ms' }}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
-              Meet Feynman,<br />
-              your personal AI tutor
+              Meet <span className="text-[#8B5CF6] animate-pulse">
+                Feynman
+                <span className="absolute bottom-0 left-0 w-full h-1 bg-[#8B5CF6] transform"></span>
+              </span> 🧠 <br />
+              your personal AI tutor 🧑‍💻
             </h1>
             
             <p className="text-lg md:text-xl text-gray-700 mt-4 max-w-2xl">
@@ -23,7 +26,7 @@ const HeroSection: React.FC = () => {
                 to="/login" 
                 className="btn-primary inline-block animate-button-glow text-lg"
               >
-                Start Learning
+                Start Learning 
               </Link>
             </div>
           </div>
