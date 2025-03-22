@@ -1,3 +1,4 @@
+
 // src/pages/Login.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -5,10 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Navbar from '@/components/Navbar';
-
-// Removed Firebase authentication imports
-// import { signInWithEmailAndPassword } from 'firebase/auth';
-// import { auth } from '../firebase';
+import { toast } from 'sonner';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +16,9 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Skip auth logic, directly navigate to dashboard
+    // Simulate login success
+    toast.success('Logged in successfully');
+    // Navigate to dashboard
     navigate('/dashboard');
   };
 
@@ -66,7 +66,6 @@ const Login: React.FC = () => {
               Sign in
             </Button>
 
-            {/* Error display is kept in case you want to show static messages later */}
             {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           </form>
 

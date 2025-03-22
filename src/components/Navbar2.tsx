@@ -1,11 +1,16 @@
+
 import { Button } from '@/components/ui/button';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+
   const logOut = async () => {
-    // TODO: ADD CODE FOR LOGOUT
-    console.log('sign out');
+    toast.success('Logged out successfully');
+    // Navigate to recharging page
+    navigate('/recharging');
   };
 
   return (
@@ -13,14 +18,16 @@ export const Navbar = () => {
       <div className="flex justify-between items-center px-4 py-2 w-full">
         {/* Logo Section */}
         <div className="flex justify-start">
-          <img src="/path/to/your/logo.png" alt="Feynman.ai Logo" className="h-8" />
+          <Link to="/">
+            <span className="text-xl font-medium">Feynman.ai ⭐️</span>
+          </Link>
         </div>
 
         {/* Sign Out Button */}
         <div>
           <Button
             onClick={logOut}
-            className="bg-black text-white h-[5%] hover:bg-white hover:text-black border-2 border-black rounded-half"
+            className="bg-black text-white hover:bg-white hover:text-black border-2 border-black rounded-md transition-colors"
           >
             Sign Out
           </Button>
