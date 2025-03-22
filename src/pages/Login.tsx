@@ -1,31 +1,25 @@
 // src/pages/Login.tsx
-import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Navbar from '@/components/Navbar';
 
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase'; // Adjust if firebase.ts is in a different folder
+// Removed Firebase authentication imports
+// import { signInWithEmailAndPassword } from 'firebase/auth';
+// import { auth } from '../firebase';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login successful');
-      // redirect if needed
-    } catch (err: any) {
-      setError(err.message);
-    }
+    // Skip auth logic, directly navigate to dashboard
+    navigate('/dashboard');
   };
 
   return (
@@ -72,6 +66,7 @@ const Login: React.FC = () => {
               Sign in
             </Button>
 
+            {/* Error display is kept in case you want to show static messages later */}
             {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           </form>
 
