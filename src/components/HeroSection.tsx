@@ -20,7 +20,7 @@ const HeroSection: React.FC = () => {
             
             <div className="mt-8 sm:mt-10">
               <Link 
-                to="/start" 
+                to="/login" 
                 className="btn-primary inline-block animate-button-glow text-lg"
               >
                 Start Learning
