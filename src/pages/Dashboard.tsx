@@ -5,8 +5,11 @@ import LipSyncAnimation from '@/components/Animation';
 import { Chat } from '@/components/chat';
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [hasInteracted, setHasInteracted] = useState(false)
   const sentence = "HELLO WORLD";
+  const handleFirstInteraction = () => {
+    setHasInteracted(true);
+  }
   return (
     <>
       {/* Navbar */}
