@@ -24,7 +24,7 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
 
     if (!inputValue.trim()) return;
 
-    // Trigger the first interaction if it hasn't happened yet
+    // Trigger the first interaction only when message is actually submitted
     if (!hasInteracted && onFirstInteraction) {
       onFirstInteraction();
     }
@@ -45,11 +45,6 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
 
   const handleRecording = async () => {
     try {
-      // Trigger the first interaction if starting recording and it hasn't happened yet
-      if (!isRecording && !hasInteracted && onFirstInteraction) {
-        onFirstInteraction();
-      }
-
       if (!isRecording) {
         console.log("Starting recording...");
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -68,6 +63,11 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
           const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
           const formData = new FormData();
           formData.append('voice', audioBlob);
+
+          // Trigger the first interaction when voice message is actually sent
+          if (!hasInteracted && onFirstInteraction) {
+            onFirstInteraction();
+          }
 
           // Send audio blob to backend
           fetch('http://localhost:3001/api/chat', {
